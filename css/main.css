@@ -1,0 +1,12 @@
+.navbar-brand {
+    color: #FFF !important;
+}
+
+#ajax-loader {
+    margin-top: 100px;
+    margin-bottom: 5px;
+}
+
+#deals-table {
+    text-align: left;
+}
