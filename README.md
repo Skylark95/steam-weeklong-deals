@@ -1,4 +1,4 @@
-steam-weeklong-deals
+Steam Weeklong Deals
 ====================
 
 An easy to read summary of the current weeklong deals on Steam
