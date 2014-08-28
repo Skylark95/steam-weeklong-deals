@@ -11,6 +11,22 @@
     text-align: left;
 }
 
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.clear {
+    clear: both
+}
+
+.green {
+    color: #009900;
+}
+
 #instruction {
     margin-bottom: 12px;
     font-weight: bold;
