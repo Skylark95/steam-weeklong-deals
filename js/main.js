@@ -1,6 +1,6 @@
-$(function() {
-    
-    // FUNCTIONS
+$(function () {
+    "use strict";
+    var tableData = [];
     
     /**
      * http://stackoverflow.com/a/5631434
@@ -9,7 +9,7 @@ $(function() {
         var n = url.indexOf('?'),
             trimmedUrl = url.substring(0, n !== -1 ? n : url.length);
         
-        if(trimmedUrl.lastIndexOf('/') === trimmedUrl.length - 1) {
+        if (trimmedUrl.lastIndexOf('/') === trimmedUrl.length - 1) {
             trimmedUrl = trimmedUrl.substring(0, trimmedUrl.lastIndexOf('/'));
         }
         
@@ -22,37 +22,46 @@ $(function() {
     function createLink(url, text) {
         return $('<a>', {
             href: url,
-            text: text
-        }).wrapAll('<div>').parent().html();
+            text: text,
+            target: '_blank'
+        }).wrapAll('<div>')
+            .parent()
+            .html();
     }
     
-    // MAIN
-    var tableData = [];
-    
-    $.get('api/', {page: 'weeklongdeals'}, function(data) {
-        var $items = $(data).find('.item');
+    $.get('api/', {page: 'weeklongdeals'}, function (data) {
+        var $items = $(data.html).find('.item');
         
-        $items.each(function(idx, item) {
-                var url = trimUrl($(item).find('a').attr('href')),
-                    appId = url.substring(url.lastIndexOf('/') + 1),
-                    app = createLink(url, appId);
+        $items.each(function (idx, item) {
+            var $item = $(item),
+                url = trimUrl($item.find('a').attr('href')),
+                appId = url.substring(url.lastIndexOf('/') + 1),
+                appLink = createLink(url, appId),
+                percent = $item.find('.info .percent').first().text(),
+                priceWas = $item.find('.info .price span.was').first().text(),
+                priceNow = $item.find('.info .price span').last().text();
             
-            $.get('api/', {page: 'apphover', app: appId}, function(data) {
-                var name = $(data).find('h4').first().text();
-                tableData.push([app, name]);
-                $('#load-count').html('Loaded ' + tableData.length + ' of ' + $items.length +' entries...');
+            $.get('api/', {page: 'apphover', app: appId}, function (data) {
+                var name = $(data.html).find('h4').first().text();
+                tableData.push([appLink, name, percent, priceWas, priceNow]);
+                $('#load-count').html('Loaded ' + tableData.length + ' of ' + $items.length + ' entries...');
             });
-        })
+        });
     });
     
-    $(document).ajaxStop(function() {
+    $(document).ajaxStop(function () {
         $('#ajax-loader').hide();
         $('#deals-table').dataTable({
             'data': tableData,
             'columns': [
                 {'title': 'App ID'},
-                {'title': 'Name'}
+                {'title': 'Name'},
+                {'title': 'Percent'},
+                {'title': 'Was'},
+                {'title': 'Now'}
             ]
-        }).removeClass('hidden');
+        });
+        
+        $('.show-on-load').removeClass('hidden');
     });
 });

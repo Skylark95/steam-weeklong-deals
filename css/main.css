@@ -7,6 +7,11 @@
     margin-bottom: 5px;
 }
 
-#deals-table {
+.left {
     text-align: left;
+}
+
+#instruction {
+    margin-bottom: 12px;
+    font-weight: bold;
 }
