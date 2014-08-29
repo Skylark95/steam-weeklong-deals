@@ -35,13 +35,17 @@ $(function () {
         $items.each(function (idx, item) {
             var $item = $(item),
                 url = trimUrl($item.find('a').attr('href')),
-                appId = url.substring(url.lastIndexOf('/') + 1),
+                urlIdx = url.lastIndexOf('/'),
+                appId = url.substring(urlIdx + 1),
                 appLink = createLink(url, appId),
                 percent = $item.find('.info .percent').first().text(),
                 priceWas = $item.find('.info .price span.was').first().text(),
-                priceNow = $item.find('.info .price span').last().text();
+                priceNow = $item.find('.info .price span').last().text(),
+                page = url.substring(urlIdx - 3, urlIdx),
+                apiParams = {'page': page + 'hover'};
             
-            $.get('api/', {page: 'apphover', app: appId}, function (data) {
+            apiParams[page] = appId;
+            $.get('api/', apiParams, function (data) {
                 var name = $(data.html).find('h4').first().text();
                 tableData.push([appLink, name, percent, priceWas, priceNow]);
                 $('#load-count').html('Loaded ' + tableData.length + ' of ' + $items.length + ' entries...');

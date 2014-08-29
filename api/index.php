@@ -17,6 +17,8 @@ if (is_page(PAGE_WEEKLONG_DEALS)) {
     echo get_page(PAGE_WEEKLONG_DEALS, URL_WEEKLONG_DEALS, $cache);
 } else if (is_page(PAGE_APP_HOVER) && isset($_GET[APP])) {
     echo get_page(PAGE_APP_HOVER . '-' . $_GET[APP], URL_APP_HOVER . '/' . $_GET[APP], $cache);
+} else if (is_page(PAGE_SUB_HOVER) && isset($_GET[SUB])) {
+    echo get_page(PAGE_SUB_HOVER . '-' . $_GET[SUB], URL_SUB_HOVER . '/' . $_GET[SUB], $cache);
 } else {
     echo bad_request();
 }

@@ -22,7 +22,7 @@ function do_clear_cache()
 
 function is_page($value)
 {
-    return isset($_GET['page']) && $_GET['page'] === $value;
+    return isset($_GET[PAGE]) && $_GET[PAGE] === $value;
 }
 
 /**
