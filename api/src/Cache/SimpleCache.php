@@ -1,6 +1,5 @@
 <?php
 namespace Skylark95\SteamWeeklongDeals\Cache;
-require 'vendor/autoload.php';
 
 class SimpleCache implements Cache {
     
