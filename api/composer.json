@@ -1,5 +1,11 @@
 {
+    "autoload": {
+        "psr-4": {
+            "Skylark95\\SteamWeeklongDeals\\": "src/"
+        }
+    },
     "require": {
-        "gilbitron/php-simplecache": "~1.4.1"
+        "gilbitron/php-simplecache": "~1.4.1",
+        "respect/rest": "0.5.1"
     }
 }

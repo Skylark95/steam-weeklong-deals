@@ -1,6 +1,7 @@
 $(function () {
     "use strict";
-    var tableData = [];
+    var $deals,
+        tableData = [];
     
     /**
      * http://stackoverflow.com/a/5631434
@@ -29,43 +30,51 @@ $(function () {
             .html();
     }
     
-    $.get('api/', {page: 'weeklongdeals'}, function (data) {
-        var $items = $(data.html).find('.item');
-        
-        $items.each(function (idx, item) {
-            var $item = $(item),
-                url = trimUrl($item.find('a').attr('href')),
-                urlIdx = url.lastIndexOf('/'),
-                appId = url.substring(urlIdx + 1),
-                appLink = createLink(url, appId),
-                percent = $item.find('.info .percent').first().text(),
-                priceWas = $item.find('.info .price span.was').first().text(),
-                priceNow = $item.find('.info .price span').last().text(),
-                page = url.substring(urlIdx - 3, urlIdx),
-                apiParams = {'page': page + 'hover'};
-            
-            apiParams[page] = appId;
-            $.get('api/', apiParams, function (data) {
-                var name = $(data.html).find('h4').first().text();
-                tableData.push([appLink, name, percent, priceWas, priceNow]);
-                $('#load-count').html('Loaded ' + tableData.length + ' of ' + $items.length + ' entries...');
-            });
+    function getDealsResults(idx, result) {
+        var $result = $(result),
+            url = trimUrl($result.find('a').attr('href')),
+            urlIdx = url.lastIndexOf('/'),
+            appId = url.substring(urlIdx + 1),
+            appLink = createLink(url, appId),
+            percent = $result.find('.info .percent').first().text(),
+            priceWas = $result.find('.info .price span.was').first().text(),
+            priceNow = $result.find('.info .price span').last().text(),
+            page = url.substring(urlIdx - 3, urlIdx),
+            apiParams = {'page': page + 'hover'};
+
+        apiParams[page] = appId;
+        $.get('api/', apiParams, function (data) {
+            var name = $(data.html).find('h4').first().text();
+            tableData.push([appLink, name, percent, priceWas, priceNow]);
+            $('#load-count').html('Loaded ' + tableData.length + ' of ' + $deals.length + ' entries...');
         });
-    });
+    }
     
-    $(document).ajaxStop(function () {
-        $('#ajax-loader').hide();
-        $('#deals-table').dataTable({
-            'data': tableData,
-            'columns': [
-                {'title': 'App ID'},
-                {'title': 'Name'},
-                {'title': 'Percent'},
-                {'title': 'Was'},
-                {'title': 'Now'}
-            ]
+    function getDeals() {
+        $.get('api/', {page: 'weeklongdeals'}, function (data) {
+            $deals = $(data.html).find('.item');
+            $deals.each(getDealsResults);
         });
+    }
+    
+    function loadTable() {
+        $(document).ajaxStop(function () {
+            $('#ajax-loader').hide();
+            $('#deals-table').dataTable({
+                'data': tableData,
+                'columns': [
+                    {'title': 'App ID'},
+                    {'title': 'Name'},
+                    {'title': 'Percent'},
+                    {'title': 'Was'},
+                    {'title': 'Now'}
+                ]
+            });
         
-        $('.show-on-load').removeClass('hidden');
-    });
+            $('.show-on-load').removeClass('hidden');
+        });
+    }
+    
+    getDeals();
+    loadTable();
 });

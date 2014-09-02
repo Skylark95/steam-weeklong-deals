@@ -1,24 +1,13 @@
 <?php
 require 'vendor/autoload.php';
-require 'functions.php';
-require 'config.php';
+use Respect\Rest\Router;
+use Skylark95\SteamWeeklongDeals\Cache\SimpleCache;
+
+$r3 = new Router('/steam-weeklong-deals/api');
+$namespace = 'Skylark95\\SteamWeeklongDeals\\Controller\\';
+$cache = new SimpleCache(getcwd() . '/cache/', 86400);
 
 header('Content-Type:application/json');
 
-if (is_clear_cache()) {
-    echo do_clear_cache();
-    exit();
-}
-
-$cache = new Gilbitron\Util\SimpleCache();
-$cache->cache_time = 86400;
-
-if (is_page(PAGE_WEEKLONG_DEALS)) {
-    echo get_page(PAGE_WEEKLONG_DEALS, URL_WEEKLONG_DEALS, $cache);
-} else if (is_page(PAGE_APP_HOVER) && isset($_GET[APP])) {
-    echo get_page(PAGE_APP_HOVER . '-' . $_GET[APP], URL_APP_HOVER . '/' . $_GET[APP], $cache);
-} else if (is_page(PAGE_SUB_HOVER) && isset($_GET[SUB])) {
-    echo get_page(PAGE_SUB_HOVER . '-' . $_GET[SUB], URL_SUB_HOVER . '/' . $_GET[SUB], $cache);
-} else {
-    echo bad_request();
-}
+$r3->get('/sale/weeklongdeals', $namespace . 'SaleWeeklongDeals', [$cache]);
+$r3->get('/details/app/*', $namespace . 'AppDetails', [$cache]);
