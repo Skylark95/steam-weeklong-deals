@@ -3,11 +3,20 @@ require 'vendor/autoload.php';
 use Respect\Rest\Router;
 use Skylark95\SteamWeeklongDeals\Cache\SimpleCache;
 
+/**
+ * Config
+ */
+header('Content-Type:application/json');
 $r3 = new Router('/steam-weeklong-deals/api');
 $namespace = 'Skylark95\\SteamWeeklongDeals\\Controller\\';
-$cache = new SimpleCache(getcwd() . '/cache/', 86400);
+$cachePath = getcwd() . '/tmp/';
+$cacheTime = 86400;
+$clearCacheKey = 'pwd';
+$cache = new SimpleCache($cachePath, $cacheTime);
 
-header('Content-Type:application/json');
-
+/**
+ * Routing
+ */
 $r3->get('/sale/weeklongdeals', $namespace . 'SaleWeeklongDeals', [$cache]);
-$r3->get('/details/app/*', $namespace . 'AppDetails', [$cache]);
+$r3->get('/details/*/*', $namespace . 'Details', [$cache]);
+$r3->delete('/cache/', $namespace . 'Cache', [$clearCacheKey, $cachePath]);

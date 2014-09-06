@@ -5,7 +5,7 @@
         }
     },
     "require": {
-        "gilbitron/php-simplecache": "~1.4.1",
-        "respect/rest": "0.5.1"
+        "gilbitron/php-simplecache": "1.4.1",
+        "respect/rest": "dev-develop"
     }
 }

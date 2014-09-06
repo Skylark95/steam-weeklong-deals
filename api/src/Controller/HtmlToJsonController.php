@@ -2,7 +2,20 @@
 namespace Skylark95\SteamWeeklongDeals\Controller;
 use Skylark95\SteamWeeklongDeals\Cache\Cache;
 
-abstract class HtmlToJsonController {
+abstract class HtmlToJsonController extends AbstractController {
+    
+    protected static $searchChars = [
+        '/\>[^\S ]+/s',
+        '/[^\S ]+\</s',
+        '/(\s)+/s',
+        '/<img[^>]+\>/i'
+    ];
+    protected static $replaceChars = [
+        '>',
+        '<',
+        '\\1',
+        ''
+    ];
     
     private $cache;
     
@@ -11,7 +24,7 @@ abstract class HtmlToJsonController {
         $this->cache = $cache;
     }
     
-    public function getHtmlAsJson($label, $url)
+    protected function getHtmlAsJson($label, $url)
     {
         if ($this->cache->isCached($label)) {
             return $this->cache->getCache($label);
@@ -25,19 +38,7 @@ abstract class HtmlToJsonController {
     
     private function htmlToJson($html)
     {
-        $search = [
-        '/\>[^\S ]+/s',
-        '/[^\S ]+\</s',
-        '/(\s)+/s',
-        '/<img[^>]+\>/i'
-        ];
-        $replace = [
-            '>',
-            '<',
-            '\\1',
-            ''
-        ];
-        $html = preg_replace($search, $replace, $html);
+        $html = preg_replace(static::$searchChars, static::$replaceChars, $html);
         return json_encode(['html' => $html]);
     }
     

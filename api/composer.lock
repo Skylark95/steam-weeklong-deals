@@ -1,0 +1,143 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "0b6d3d1f990ae4d226cdb5a0d05906ce",
+    "packages": [
+        {
+            "name": "gilbitron/php-simplecache",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gilbitron/PHP-SimpleCache.git",
+                "reference": "eb43b12945955428ced0b55d711d57afc6c4c9b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gilbitron/PHP-SimpleCache/zipball/eb43b12945955428ced0b55d711d57afc6c4c9b3",
+                "reference": "eb43b12945955428ced0b55d711d57afc6c4c9b3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gilbitron\\Util\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gilbert Pellegrom",
+                    "email": "gilbert@pellegrom.me",
+                    "homepage": "http://gilbert.pellegrom.me"
+                }
+            ],
+            "description": "A simple script for caching 3rd party API calls in PHP.",
+            "homepage": "https://github.com/gilbitron/PHP-SimpleCache",
+            "keywords": [
+                "cache",
+                "simplecache"
+            ],
+            "time": "2014-07-15 09:37:49"
+        },
+        {
+            "name": "respect/rest",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Respect/Rest.git",
+                "reference": "28292ebd12a28fb195ee89a5af43cb87722e8b90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Respect/Rest/zipball/28292ebd12a28fb195ee89a5af43cb87722e8b90",
+                "reference": "28292ebd12a28fb195ee89a5af43cb87722e8b90",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Respect\\Rest": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Henrique Moody",
+                    "email": "henriquemoody@gmail.com",
+                    "homepage": "http://about.me/henriquemoody"
+                },
+                {
+                    "name": "Alexandre Gaigalas",
+                    "email": "alexandre@gaigalas.net"
+                },
+                {
+                    "name": "Augusto Pascutti",
+                    "email": "contato@augustopascutti.com"
+                },
+                {
+                    "name": "kleberhs007",
+                    "email": "kleberhs007@yahoo.com"
+                },
+                {
+                    "name": "Leandro",
+                    "email": "lleitep3@gmail.com"
+                },
+                {
+                    "name": "Rogerio Prado de Jesus",
+                    "email": "rogeriopradoj@gmail.com"
+                },
+                {
+                    "name": "Anderson Casimiro",
+                    "email": "duodraco@duo.draco"
+                },
+                {
+                    "name": "Ben Ramsey",
+                    "email": "ben@benramsey.com"
+                },
+                {
+                    "name": "eduardomarcate",
+                    "email": "eduardo@marcate.info"
+                },
+                {
+                    "name": "Eduardo M. Garcia",
+                    "email": "eduardo@debian.elam"
+                },
+                {
+                    "name": "Nick Rawe",
+                    "email": "nickrawe2@gmail.com"
+                },
+                {
+                    "name": "Pablo Lacerda de Miranda",
+                    "email": "pablolmiranda@gmail.com"
+                },
+                {
+                    "name": "wesleyvicthor",
+                    "email": "w.v.mendes.s@gmail.com"
+                }
+            ],
+            "description": "Thin controller for RESTful applications",
+            "time": "2014-02-15 18:56:25"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "respect/rest": 20
+    },
+    "prefer-stable": false,
+    "platform": [],
+    "platform-dev": []
+}
