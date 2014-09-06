@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=450px">
+    <meta name="viewport" content="width=500px">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -30,34 +30,37 @@
     <div class="container">
         <div class="starter-template">
             <div id="ajax-loader">
-                <img id="ajax-loader" src="img/ajax-loader.gif" />
+                <img src="img/ajax-loader.gif" />
                 <div id="load-count">Loading...</div>
             </div>
-            <div id="instruction" class="left hidden show-on-load">Click the App ID to view on Steam</div>
+            <div id="instruction" class="text-left hidden show-on-load"><strong>Click the App ID to view on Steam</strong></div>
             <table id="deals-table" class="table table-striped table-bordered table-hover left hidden show-on-load" style="margin-right:149px">
                 <thead>
                     <th>URL</th>
                     <th>Name</th>
-                    <th>Percent</th>
+                    <th>Discount</th>
                     <th>Was</th>
                     <th>Now</th>
+                    <th>Rating*</th>
                 </thead>
             </table>
+            <div id="review-help" class="text-right hidden show-on-load small"><strong>*Rating</strong> is the percentage of positive reviews in the 50 highest rated reviews.</div>
         </div>
     </div>
     <!-- /.container -->
 
     <div class="footer">
         <div class="container">
-            <p class="text-muted float-left">&copy; 2014 Skylark95</p>
-            <div class="text-muted float-right">
+            <div class="text-muted pull-left">
+                <div class="small">Version 1.0-dev</div>
+                <div class="small"> &copy; 2014 Skylark95</div>
+            </div>
+            <div id="github-links" class="text-muted pull-right">
                 <iframe src="http://ghbtns.com/github-btn.html?user=skylark95&repo=steam-weeklong-deals&type=watch&count=true"allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
                 <iframe src="http://ghbtns.com/github-btn.html?user=skylark95&repo=steam-weeklong-deals&type=fork&count=true"allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
             </div>
         </div>
     </div>
-
-    <div class="clear"></div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -67,5 +70,5 @@
     <script src="js/main.min.js"></script>
 
 </body>
-
 </html>
+

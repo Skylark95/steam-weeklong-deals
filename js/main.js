@@ -61,7 +61,7 @@ $(function () {
 
         detailsResource[page].read(appId).done(function (data) {
             var name = $(data.html).find('h4').first().text();
-            tableData.push([appLink, name, percent, priceWas, priceNow]);
+            tableData.push([appLink, name, percent, priceWas, priceNow, '']);
             $('#load-count').html('Loaded ' + tableData.length + ' of ' + $deals.length + ' entries...');
         });
     }
@@ -87,9 +87,10 @@ $(function () {
                 'columns': [
                     {'title': 'App ID'},
                     {'title': 'Name'},
-                    {'title': 'Percent'},
+                    {'title': 'Discount'},
                     {'title': 'Was'},
-                    {'title': 'Now'}
+                    {'title': 'Now'},
+                    {'title': 'Rating*'}
                 ]
             });
         
