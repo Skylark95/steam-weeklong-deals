@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0b6d3d1f990ae4d226cdb5a0d05906ce",
+    "hash": "cd0e3e8dd8b65df987cbb6b64080ded6",
     "packages": [
         {
             "name": "gilbitron/php-simplecache",
@@ -47,6 +47,47 @@
                 "simplecache"
             ],
             "time": "2014-07-15 09:37:49"
+        },
+        {
+            "name": "querypath/querypath",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/technosophos/querypath.git",
+                "reference": "5597edb17eba8b974f2d8a5e65e4cb8fa0fc95f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/technosophos/querypath/zipball/5597edb17eba8b974f2d8a5e65e4cb8fa0fc95f6",
+                "reference": "5597edb17eba8b974f2d8a5e65e4cb8fa0fc95f6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "QueryPath": "src/"
+                },
+                "files": [
+                    "src/qp_functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "HTML/XML querying (CSS 4 or XPath) and processing (like jQuery)",
+            "homepage": "https://github.com/technosophos/querypath",
+            "keywords": [
+                "css",
+                "html",
+                "jquery",
+                "xml",
+                "xslt"
+            ],
+            "time": "2014-01-16 23:52:14"
         },
         {
             "name": "respect/rest",
@@ -135,7 +176,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "respect/rest": 20
+        "respect/rest": 20,
+        "querypath/querypath": 20
     },
     "prefer-stable": false,
     "platform": [],

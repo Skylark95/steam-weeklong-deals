@@ -11,7 +11,12 @@ abstract class AbstractController {
     protected function badRequest()
     {
         $this->status(400);
-        return json_encode(['status' => 'HTTP/1.1 400 Bad Request']);
+        return $this->jsonEncode(['status' => 'HTTP/1.1 400 Bad Request']);
+    }
+    
+    protected function jsonEncode(array $array)
+    {
+        return json_encode($array);
     }
     
 }

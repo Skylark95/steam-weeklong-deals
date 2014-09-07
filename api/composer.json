@@ -6,6 +6,7 @@
     },
     "require": {
         "gilbitron/php-simplecache": "1.4.1",
-        "respect/rest": "dev-develop"
+        "respect/rest": "dev-develop",
+        "querypath/QueryPath": "dev-master"
     }
 }
