@@ -103,7 +103,7 @@ $(function () {
         } else if (page === 'sub') {
             detailsResource.sub.read(appId).done(function (detailsRsp) {
                 var name = $(detailsRsp.html).find('h4').first().text();
-                tableData.push([appLink, name, percent, priceWas, priceNow, 'N/A']);
+                tableData.push([appLink, name, percent, priceWas, priceNow, '']);
                 updateLoadingStatus(detailsRsp.cached);
             });
         }
@@ -128,12 +128,12 @@ $(function () {
             $('#deals-table').dataTable({
                 'data': tableData,
                 'columns': [
-                    {'title': 'App ID'},
-                    {'title': 'Name'},
-                    {'title': 'Discount'},
-                    {'title': 'Was'},
-                    {'title': 'Now'},
-                    {'title': 'Rating*'}
+                    {'title': 'App ID', 'type': 'html-num-fmt'},
+                    {'title': 'Name', 'type': 'string'},
+                    {'title': 'Discount', 'type': 'num-fmt'},
+                    {'title': 'Was', 'type': 'num-fmt'},
+                    {'title': 'Now', 'type': 'num-fmt'},
+                    {'title': 'Rating*', 'type': 'num-fmt'}
                 ]
             });
         
