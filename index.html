@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=500px">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=500">
+    <meta name="description" content="An easy to read summary of the current weeklong deals on Steam">
+    <meta name="author" content="Skylark95">
 
     <title>Steam Weeklong Deals</title>
 
@@ -32,7 +32,10 @@
             <div id="ajax-loader">
                 <img src="img/ajax-loader.gif" />
                 <div id="load-count">Loading...</div>
-                <div id="cache-warning" class="hidden">Rebuilding app cache.  This may take some time!</div>
+                <div id="cache-warning" class="hidden">
+                    <div>Rebuilding app cache.  This may take some time!</div>
+                    <small>Data is refreshed on demand every 24 hours.</small>
+                </div>
             </div>
             <div id="instruction" class="text-left hidden show-on-load"><strong>Click the App ID to view on Steam</strong></div>
             <table id="deals-table" class="table table-striped table-bordered table-hover text-left hidden show-on-load" style="margin-right:149px">
@@ -46,6 +49,7 @@
                 </thead>
             </table>
             <div id="review-help" class="text-right hidden show-on-load small"><strong>*Rating</strong> is the percentage of positive reviews in the 50 highest rated reviews.</div>
+            <div class="text-right hidden show-on-load small">Data for <a href="http://store.steampowered.com/sale/Weeklong_Deals" target="_blank">weeklong deals</a> is refreshed on demand every 24 hours.</div>
         </div>
     </div>
     <!-- /.container -->
@@ -72,4 +76,3 @@
 
 </body>
 </html>
-
