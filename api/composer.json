@@ -1,4 +1,22 @@
 {
+    "name": "skylark95/steam-weeklong-deals",
+    "description": "An easy to read summary of the current weeklong deals on Steam",
+    "type": "project",
+    "homepage": "http://webapp.skylark95.com/steam-weeklong-deals/",
+    "license": "GPL-3.0",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Derek",
+            "email": "derek@skylark95.com",
+            "homepage": "http://www.skylark95.com/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/Skylark95/steam-weeklong-deals.git",
+        "issues": "https://github.com/Skylark95/steam-weeklong-deals/issues"
+    },
     "autoload": {
         "psr-4": {
             "Skylark95\\SteamWeeklongDeals\\": "src/"
