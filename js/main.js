@@ -3,9 +3,12 @@ $(function () {
     var $deals,
         saleResource,
         detailsResource,
+        ratingsResource,
         tableData = [];
     
-    // SETUP //
+    /**
+     * Setup jQuery Rest
+     */
     function setUpRest() {
         var client = new $.RestClient('/steam-weeklong-deals/api/');
         
@@ -14,6 +17,9 @@ $(function () {
         detailsResource = client.add('details', {isSingle: true});
         detailsResource.add('app');
         detailsResource.add('sub');
+        
+        ratingsResource = client.add('ratings', {isSingle: true});
+        ratingsResource.add('app');
     }
     
     /**
@@ -46,6 +52,31 @@ $(function () {
     }
     
     /**
+     * Updates the count for the number of records loaded
+     */
+    function updateLoadingStatus(cached) {
+        $('#load-count').html('Loaded ' + tableData.length + ' of ' + $deals.length + ' entries...');
+        if (!cached) {
+            $('#cache-warning').removeClass('hidden');
+        }
+    }
+    
+    /**
+     * Parse and calculate user rating
+     */
+    function getRating(ratings) {
+        var total = 0,
+            recommended = 0;
+        $.each(ratings, function (idx, data) {
+            var $data = $(data.html),
+                count = $data.find('div.title').length;
+            total += count;
+            recommended += count - $data.find('div.title:contains(\'Not Recommended\')').length;
+        });
+        return Math.round((recommended / total) * 100) + '%';
+    }
+    
+    /**
      * Callback for loading the details for a single row in the table
      */
     function getDealsResults(idx, result) {
@@ -59,11 +90,23 @@ $(function () {
             priceNow = $result.find('.info .price span').last().text(),
             page = url.substring(urlIdx - 3, urlIdx);
 
-        detailsResource[page].read(appId).done(function (data) {
-            var name = $(data.html).find('h4').first().text();
-            tableData.push([appLink, name, percent, priceWas, priceNow]);
-            $('#load-count').html('Loaded ' + tableData.length + ' of ' + $deals.length + ' entries...');
-        });
+        if (page === 'app') {
+            $.when(
+                detailsResource.app.read(appId),
+                ratingsResource.app.read(appId)
+            ).done(function (detailsRsp, ratingsRsp) {
+                var name = $(detailsRsp[0].html).find('h4').first().text(),
+                    rating = getRating(ratingsRsp[0].ratings);
+                tableData.push([appLink, name, percent, priceWas, priceNow, rating]);
+                updateLoadingStatus(detailsRsp[0].cached || ratingsRsp[0].cached);
+            });
+        } else if (page === 'sub') {
+            detailsResource.sub.read(appId).done(function (detailsRsp) {
+                var name = $(detailsRsp.html).find('h4').first().text();
+                tableData.push([appLink, name, percent, priceWas, priceNow, '']);
+                updateLoadingStatus(detailsRsp.cached);
+            });
+        }
     }
     
     /**
@@ -85,11 +128,12 @@ $(function () {
             $('#deals-table').dataTable({
                 'data': tableData,
                 'columns': [
-                    {'title': 'App ID'},
-                    {'title': 'Name'},
-                    {'title': 'Percent'},
-                    {'title': 'Was'},
-                    {'title': 'Now'}
+                    {'title': 'App ID', 'type': 'html-num-fmt'},
+                    {'title': 'Name', 'type': 'string'},
+                    {'title': 'Discount', 'type': 'num-fmt'},
+                    {'title': 'Was', 'type': 'num-fmt'},
+                    {'title': 'Now', 'type': 'num-fmt'},
+                    {'title': 'Rating*', 'type': 'num-fmt'}
                 ]
             });
         

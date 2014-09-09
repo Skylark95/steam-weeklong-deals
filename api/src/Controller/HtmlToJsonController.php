@@ -24,22 +24,58 @@ abstract class HtmlToJsonController extends AbstractController {
         $this->cache = $cache;
     }
     
-    protected function getHtmlAsJson($label, $url)
+    protected function getHtmlAsJson($label, $url, $selector = false)
     {
-        if ($this->cache->isCached($label)) {
-            return $this->cache->getCache($label);
+        $json = $this->getCache($label);
+        
+        if (!$json) {
+            $response = ['cached' => true];
+            if (!$selector) {
+                $response['html'] = $this->getMinifiedHtml($url);
+            } else {
+                $response['html'] = $this->getFilteredHtml($url, $selector);
+            }
+            $this->setCache($label, parent::jsonEncode($response));
+            $response['cached'] = false;
+            $json = parent::jsonEncode($response);
         }
-        $html = $this->cache->doCurl($url);
-        $json = $this->htmlToJson($html);
-        $this->cache->setCache($label, $json);
-
+        
         return $json;
     }
     
-    private function htmlToJson($html)
+    protected function getCache($label)
     {
-        $html = preg_replace(static::$searchChars, static::$replaceChars, $html);
-        return json_encode(['html' => $html]);
+        if ($this->cache->isCached($label)) {
+            header('Cached: true');
+            return $this->cache->getCache($label);
+        }
+        header('Cached: false');
+        return false;
+    }
+    
+    protected function setCache($label, $json)
+    {
+        $this->cache->setCache($label, $json);
+    }
+    
+    protected function getHtml($url)
+    {
+        return $this->cache->doCurl($url);
+    }
+    
+    protected function getFilteredHtml($url, $selector)
+    {
+        $qp = qp($this->getHtml($url), $selector);
+        $html = '';
+        foreach ($qp as $item) {
+            $html .= $item->html();
+        }
+        return "<div>{$html}</div>";
+    }
+    
+    protected function getMinifiedHtml($url)
+    {
+        return preg_replace(static::$searchChars, static::$replaceChars, $this->getHtml($url));
     }
     
 }

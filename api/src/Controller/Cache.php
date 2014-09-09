@@ -23,7 +23,7 @@ class Cache extends AbstractController implements Routable, Validatable {
         if ($this->isValid($_GET)) {
             return $this->emptyCache();
         }
-        parent::status(400);
+        parent::badRequest();
     }
     
     private function emptyCache()

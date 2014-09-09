@@ -1,0 +1,20 @@
+Options -Indexes
+
+RewriteEngine On
+RewriteBase /steam-weeklong-deals/api/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /steam-weeklong-deals/api/index.php/$1 [L]
+
+<Files *.php>
+  Deny from all
+</Files>
+<Files *.cache>
+  Deny from all
+</Files>
+<Files *.sh>
+  Deny from all
+</Files>
+<Files index.php>
+  Allow from all
+</Files>
