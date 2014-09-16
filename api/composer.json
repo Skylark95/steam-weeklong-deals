@@ -4,7 +4,7 @@
     "type": "project",
     "homepage": "http://webapp.skylark95.com/steam-weeklong-deals/",
     "license": "GPL-3.0",
-    "version": "1.0.0",
+    "version": "1.0.1-dev",
     "authors": [
         {
             "name": "Derek",

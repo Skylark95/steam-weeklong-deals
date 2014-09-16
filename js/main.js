@@ -77,6 +77,24 @@ $(function () {
     }
     
     /**
+     * Return the supported OS's for a row
+     */
+    function getOS($result) {
+        var $os = $result.find('div.OS'),
+            row = [];
+        if ($os.find('.win').length === 1) {
+            row.push(' Windows');
+        }
+        if ($os.find('.mac').length === 1) {
+            row.push(' Mac');
+        }
+        if ($os.find('.linux').length === 1) {
+            row.push(' Linux');
+        }
+        return row;
+    }
+    
+    /**
      * Callback for loading the details for a single row in the table
      */
     function getDealsResults(idx, result) {
@@ -88,8 +106,9 @@ $(function () {
             percent = $result.find('.info .percent').first().text(),
             priceWas = $result.find('.info .price span.was').first().text(),
             priceNow = $result.find('.info .price span').last().text(),
-            page = url.substring(urlIdx - 3, urlIdx);
-
+            page = url.substring(urlIdx - 3, urlIdx),
+            os = getOS($result);
+        
         if (page === 'app') {
             $.when(
                 detailsResource.app.read(appId),
@@ -97,13 +116,13 @@ $(function () {
             ).done(function (detailsRsp, ratingsRsp) {
                 var name = $(detailsRsp[0].html).find('h4').first().text(),
                     rating = getRating(ratingsRsp[0].ratings);
-                tableData.push([appLink, name, percent, priceWas, priceNow, rating]);
+                tableData.push([appLink, name, percent, priceWas, priceNow, rating, os]);
                 updateLoadingStatus(detailsRsp[0].cached || ratingsRsp[0].cached);
             });
         } else if (page === 'sub') {
             detailsResource.sub.read(appId).done(function (detailsRsp) {
                 var name = $(detailsRsp.html).find('h4').first().text();
-                tableData.push([appLink, name, percent, priceWas, priceNow, '']);
+                tableData.push([appLink, name, percent, priceWas, priceNow, '', os]);
                 updateLoadingStatus(detailsRsp.cached);
             });
         }
@@ -124,8 +143,7 @@ $(function () {
      */
     function loadTable() {
         $(document).ajaxStop(function () {
-            $('#ajax-loader').hide();
-            $('#deals-table').dataTable({
+            var $dealsTable = $('#deals-table').DataTable({
                 'data': tableData,
                 'columns': [
                     {'title': 'App ID', 'type': 'html-num-fmt'},
@@ -133,10 +151,25 @@ $(function () {
                     {'title': 'Discount', 'type': 'num-fmt'},
                     {'title': 'Was', 'type': 'num-fmt'},
                     {'title': 'Now', 'type': 'num-fmt'},
-                    {'title': 'Rating*', 'type': 'num-fmt'}
+                    {'title': 'Rating*', 'type': 'num-fmt'},
+                    {'title': 'OS', 'type': 'string'}
                 ]
             });
-        
+            
+            $('#deals-table_filter input').attr('placeholder', 'Search All');
+            
+            $('#deals-table tfoot th.filter-text').each(function () {
+                var title = $('#deals-table thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" class="form-control input-sm" placeholder="Search ' + title + '" />');
+            });
+            
+            $dealsTable.columns().eq(0).each(function (colIdx) {
+                $('input', $dealsTable.column(colIdx).footer()).on('keyup change', function () {
+                    $dealsTable.column(colIdx).search(this.value).draw();
+                });
+            });
+            
+            $('.hide-on-load').addClass('hidden');
             $('.show-on-load').removeClass('hidden');
         });
     }
