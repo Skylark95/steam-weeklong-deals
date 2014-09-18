@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=500">
+    <meta name="viewport" content="width=600">
     <meta name="description" content="An easy to read summary of the current weeklong deals on Steam">
     <meta name="author" content="Skylark95">
 
@@ -53,13 +53,13 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th id="table-footer-app-id"></th>
-                            <th id="table-footer-name" class="filter-text"></th>
-                            <th id="table-footer-discount"></th>
-                            <th id="table-footer-was"></th>
-                            <th id="table-footer-now"></th>
-                            <th id="table-footer-rating"></th>
-                            <th id="table-footer-os" class="filter-text"></th>
+                            <th id="table-footer-app-id" class="table-footer"></th>
+                            <th id="table-footer-name" class="table-footer filter-text"></th>
+                            <th id="table-footer-discount" class="table-footer"></th>
+                            <th id="table-footer-was" class="table-footer"></th>
+                            <th id="table-footer-now" class="table-footer"></th>
+                            <th id="table-footer-rating" class="table-footer"></th>
+                            <th id="table-footer-os" class="table-footer filter-os"></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -74,7 +74,7 @@
     <div class="footer">
         <div class="container">
             <div class="text-muted pull-left">
-                <div class="small">Version 1.0.1-dev</div>
+                <div class="small">Version 1.1.0-dev</div>
                 <div class="small">&copy; 2014 Skylark95</div>
             </div>
             <div id="github-links" class="text-muted pull-right">
@@ -83,7 +83,18 @@
             </div>
         </div>
     </div>
-
+    
+    <div id="components" class="hidden">
+        <div class="select-os">
+            <select class="form-control">
+                <option value="">Search OS</option>
+                <option value="Windows">Windows</option>
+                <option value="Mac">Mac</option>
+                <option value="Linux">Linux</option>
+            </select>
+        </div>
+    </div>
+    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>

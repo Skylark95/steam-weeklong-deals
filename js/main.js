@@ -38,20 +38,6 @@ $(function () {
     }
     
     /**
-     * Create an html link using jQuery
-     * @see http://stackoverflow.com/a/4261894
-     */
-    function createLink(url, text) {
-        return $('<a>', {
-            href: url,
-            text: text,
-            target: '_blank'
-        }).wrapAll('<div>')
-            .parent()
-            .html();
-    }
-    
-    /**
      * Updates the count for the number of records loaded
      */
     function updateLoadingStatus(cached) {
@@ -102,7 +88,7 @@ $(function () {
             url = trimUrl($result.find('a').attr('href')),
             urlIdx = url.lastIndexOf('/'),
             appId = url.substring(urlIdx + 1),
-            appLink = createLink(url, appId),
+            appLink = '<a href="' + url + '" target="_blank">' + appId + '</a>',
             percent = $result.find('.info .percent').first().text(),
             priceWas = $result.find('.info .price span.was').first().text(),
             priceNow = $result.find('.info .price span').last().text(),
@@ -163,8 +149,15 @@ $(function () {
                 $(this).html('<input type="text" class="form-control input-sm" placeholder="Search ' + title + '" />');
             });
             
+            $('#deals-table tfoot th.filter-os').each(function () {
+                $(this).html($('#components .select-os').clone().html());
+            });
+            
             $dealsTable.columns().eq(0).each(function (colIdx) {
                 $('input', $dealsTable.column(colIdx).footer()).on('keyup change', function () {
+                    $dealsTable.column(colIdx).search(this.value).draw();
+                });
+                $('select', $dealsTable.column(colIdx).footer()).on('change', function () {
                     $dealsTable.column(colIdx).search(this.value).draw();
                 });
             });

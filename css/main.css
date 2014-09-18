@@ -28,7 +28,13 @@
 }
 
 input[type="search"] {
-    margin-left: 3px;
+    margin-left: 5px;
+}
+
+.table-footer {
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: none !important;
 }
 
 :-moz-placeholder {
