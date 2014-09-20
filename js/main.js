@@ -59,6 +59,9 @@ $(function () {
             total += count;
             recommended += count - $data.find('div.title:contains(\'Not Recommended\')').length;
         });
+        if (total === 0) {
+            return '0%';
+        }
         return Math.round((recommended / total) * 100) + '%';
     }
     
