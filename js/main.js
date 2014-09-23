@@ -1,6 +1,6 @@
 $(function () {
     "use strict";
-    var $deals,
+    var dealCount = 0,
         saleResource,
         detailsResource,
         ratingsResource,
@@ -13,6 +13,7 @@ $(function () {
         var client = new $.RestClient('/steam-weeklong-deals/api/');
         
         saleResource = client.add('sale');
+        saleResource.add('page');
         
         detailsResource = client.add('details', {isSingle: true});
         detailsResource.add('app');
@@ -41,7 +42,7 @@ $(function () {
      * Updates the count for the number of records loaded
      */
     function updateLoadingStatus(cached) {
-        $('#load-count').html('Loaded ' + tableData.length + ' of ' + $deals.length + ' entries...');
+        $('#load-count').html('Loaded ' + tableData.length + ' of ' + dealCount + ' entries...');
         if (!cached) {
             $('#cache-warning').removeClass('hidden');
         }
@@ -69,7 +70,7 @@ $(function () {
      * Return the supported OS's for a row
      */
     function getOS($result) {
-        var $os = $result.find('div.OS'),
+        var $os = $result.find('span.platform_img').parent(),
             row = [];
         if ($os.find('.win').length === 1) {
             row.push(' Windows');
@@ -88,13 +89,13 @@ $(function () {
      */
     function getDealsResults(idx, result) {
         var $result = $(result),
-            url = trimUrl($result.find('a').attr('href')),
+            url = trimUrl($result.attr('href')),
             urlIdx = url.lastIndexOf('/'),
             appId = url.substring(urlIdx + 1),
             appLink = '<a href="' + url + '" target="_blank">' + appId + '</a>',
-            percent = $result.find('.info .percent').first().text(),
-            priceWas = $result.find('.info .price span.was').first().text(),
-            priceNow = $result.find('.info .price span').last().text(),
+            percent = $result.find('div.search_discount span').text(),
+            priceWas = $result.find('div.search_price span strike').text(),
+            priceNow = $result.find('div.search_price span strike').empty().parent().parent().text(),
             page = url.substring(urlIdx - 3, urlIdx),
             os = getOS($result);
         
@@ -120,9 +121,14 @@ $(function () {
     /**
      * Retrieve the Steam Weeklong Deals
      */
-    function getDeals() {
-        saleResource.read('weeklongdeals').done(function (data) {
-            $deals = $(data.html).find('.item');
+    function getDeals(page) {
+        var pageCount = page || 1;
+        saleResource.page.read('weeklongdeals', pageCount).done(function (data) {
+            var $deals = $(data.html).find('#search_result_container a.search_result_row');
+            dealCount += $deals.length;
+            if ($deals.length >= 25) {
+                getDeals(pageCount + 1);
+            }
             $deals.each(getDealsResults);
         });
     }

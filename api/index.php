@@ -17,7 +17,7 @@ $cache = new SimpleCache($cachePath, $cacheTime);
 /**
  * Routing
  */
-$r3->get('/sale/weeklongdeals', $namespace . 'SaleWeeklongDeals', [$cache]);
+$r3->get('/sale/weeklongdeals/page/*', $namespace . 'SaleWeeklongDeals', [$cache]);
 $r3->get('/details/*/*', $namespace . 'Details', [$cache]);
 $r3->get('/ratings/app/*', $namespace . 'Ratings', [$cache]);
 $r3->delete('/cache/', $namespace . 'Cache', [$clearCacheKey, $cachePath]);

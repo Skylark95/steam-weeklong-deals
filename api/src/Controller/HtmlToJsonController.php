@@ -65,17 +65,22 @@ abstract class HtmlToJsonController extends AbstractController {
     
     protected function getFilteredHtml($url, $selector)
     {
-        $qp = qp($this->getHtml($url), $selector);
+        $qp = htmlqp($this->getHtml($url), $selector);
         $html = '';
         foreach ($qp as $item) {
             $html .= $item->html();
         }
-        return "<div>{$html}</div>";
+        return $this->minifyHtml("<div>{$html}</div>");
     }
     
     protected function getMinifiedHtml($url)
     {
-        return preg_replace(static::$searchChars, static::$replaceChars, $this->getHtml($url));
+        return $this->minifyHtml($this->getHtml($url));
+    }
+    
+    protected function minifyHtml($html)
+    {
+        return preg_replace(static::$searchChars, static::$replaceChars, $html);
     }
     
 }
